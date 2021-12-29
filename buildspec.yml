@@ -10,8 +10,6 @@ phases:
       - npm install -g typescript
   pre_build:
     commands:
-      - nvm install lts/gallium
-      - nvm use lts/gallium
       - yarn
   build:
     commands:
