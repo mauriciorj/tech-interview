@@ -4,10 +4,10 @@ phases:
   install:
     commands:
       - curl -sL https://deb.nodesource.com/setup_16.x | bash -
-      - sudo apt install -y nodejs
+      - apt install -y nodejs
       - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
       - echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-      - sudo apt update && sudo apt install yarn
+      - apt update && sudo apt install yarn
       - node --version
       - npm install -g typescript
   pre_build:
