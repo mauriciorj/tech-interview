@@ -19,15 +19,15 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  ourNumberNumbers: {
+    color: theme.palette.primary.main,
+    marginTop: '10px',
+  },
   ourNumbersCard: {
     textAlign: 'center',
     [theme.breakpoints.down('sm')]: {
       marginBottom: '20px',
     },
-  },
-  ourNumberNumbers: {
-    color: theme.palette.primary.main,
-    marginTop: '10px',
   },
 }));
 
