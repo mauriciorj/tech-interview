@@ -18,9 +18,6 @@ phases:
     commands:
       # sync the contents of /build to S3
       - aws s3 sync ./build s3://dev.techinterview.io/ --delete
-      # invalidate the CloudFront cache for index.html
-      # to force CloudFront to update its edge locations with the new versions
-      - aws cloudfront create-invalidation --distribution-id d2moe56gxbu8n5.cloudfront.net --paths /index.html
 artifacts:
   files:
     - '**/*'
