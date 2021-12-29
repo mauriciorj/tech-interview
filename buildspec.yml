@@ -4,11 +4,12 @@ phases:
   install:
     commands:
       - npm install -g typescript
-  pre_buid:
+  pre_build:
     commands:
       - yarn
   build:
     commands:
+      - yarn
       - yarn build
 artifacts:
   files:
