@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b586820c.css",
+    "main.js": "/static/js/main.5f73cede.js",
+    "static/media/interview.webp": "/static/media/interview.278723173501f71cbc2a.webp",
+    "static/media/react_icon_100_100.png": "/static/media/react_icon_100_100.fd8bbdf67d7457058fb1.png",
+    "static/media/react_icon_100_100.webp": "/static/media/react_icon_100_100.06cb5a590a39de2e08d1.webp",
+    "static/media/tech_icon_100_100.webp": "/static/media/tech_icon_100_100.68ca152d6f6cc458cff9.webp",
+    "static/media/people_icon_100_100.webp": "/static/media/people_icon_100_100.f21f281b2d297ac7bad4.webp",
+    "static/media/question_icon_100_100.webp": "/static/media/question_icon_100_100.079405d50d28102d1462.webp",
+    "static/media/javascript_icon_100_100.webp": "/static/media/javascript_icon_100_100.74d7a63fca87059f3d41.webp",
+    "index.html": "/index.html",
+    "main.b586820c.css.map": "/static/css/main.b586820c.css.map",
+    "main.5f73cede.js.map": "/static/js/main.5f73cede.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b586820c.css",
+    "static/js/main.5f73cede.js"
+  ]
+}
