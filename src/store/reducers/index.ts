@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import mainReducer from '../../container/main/reducer';
+import questionReducer from '../../container/questions/reducer';
 
 const appReducers = combineReducers({
-  mainDetails: mainReducer,
+  questions: questionReducer,
 });
 
 export default appReducers;
