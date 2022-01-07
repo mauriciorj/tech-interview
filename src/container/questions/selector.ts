@@ -3,5 +3,5 @@ import { initialState } from './reducer';
 
 const selectQuestions = (state: any) => state.questions || initialState;
 
-export const makeSelectQuestions = () =>
-  createSelector(selectQuestions, (globalState) => globalState);
+export const makeSelectQuestions = (tech: any) =>
+  createSelector(selectQuestions, (globalState) => globalState[tech]);

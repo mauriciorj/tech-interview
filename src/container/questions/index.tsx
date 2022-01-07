@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Divider, Grid, makeStyles, Typography } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import Header from '../../components/header';
@@ -11,6 +11,7 @@ import QuestionsFilter from '../../components/questionsFilter';
 import { translations } from '../../translations';
 import { questionsDb } from '../../db/questionsDb';
 import { getQuestions } from './actions';
+import { makeSelectQuestions } from './selector';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -132,8 +133,9 @@ const Questions: React.FC<Props> = ({ data }) => {
     en: { og_url, techList },
   } = translations;
 
-  //TODO: insert the query params
   const { id } = params;
+
+  const questions = useSelector(makeSelectQuestions(id));
 
   let title = id;
   if (id) {
@@ -167,7 +169,8 @@ const Questions: React.FC<Props> = ({ data }) => {
   };
 
   const sortQuestions = (data: Props | QuestionType[]) => {
-    const orderQuestions = data.sort((a: QuestionType, b: QuestionType) =>
+    const dataCopy = [...data as any];
+    const orderQuestions = dataCopy.sort((a: QuestionType, b: QuestionType) =>
       a.order > b.order ? 1 : b.order > a.order ? -1 : 0
     );
     const lastItemIndex = currentPage * questionsPerPage;
@@ -186,35 +189,31 @@ const Questions: React.FC<Props> = ({ data }) => {
   };
 
   useEffect(() => {
-    if (id) {
-      dispatch(getQuestions({tech: id}));
-
-      //TODO: change all logic to use the getQuestions function instead of using the local file questionsDB
-
-      const questions = getQuestionsFromDb(id);
-      sortQuestions(questions as unknown as Props);
-    }
-  }, [params]);
+    dispatch(getQuestions({ tech: id }));
+  }, [id]);
 
   useEffect(() => {
-    if (id) {
-      const questions = getQuestionsFromDb(id);
-      if (questions) {
-        const getFilteredQuestions = questions.reduce(
-          (acc: QuestionType[], finalQuestions: QuestionType) => {
-            if (
-              questionsLevels[finalQuestions.level] === true &&
-              finalQuestions.level in questionsLevels
-            ) {
-              return [...acc, finalQuestions];
-            } else {
-              return acc;
-            }
-          },
-          []
-        );
-        sortQuestions(getFilteredQuestions);
-      }
+    if (id && questions) {
+      sortQuestions(questions as unknown as Props);
+    }
+  }, [questions]);
+
+  useEffect(() => {
+    if (id && questions) {
+      const getFilteredQuestions = questions.reduce(
+        (acc: QuestionType[], finalQuestions: QuestionType) => {
+          if (
+            questionsLevels[finalQuestions.level] === true &&
+            finalQuestions.level in questionsLevels
+          ) {
+            return [...acc, finalQuestions];
+          } else {
+            return acc;
+          }
+        },
+        []
+      );
+      sortQuestions(getFilteredQuestions);
     }
   }, [currentPage, questionsPerPage, questionsLevels, params]);
 
