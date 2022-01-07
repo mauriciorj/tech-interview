@@ -1,5 +1,6 @@
-import { takeLatest, put, call } from '@redux-saga/core/effects';
+import { takeLatest, put, call, select } from '@redux-saga/core/effects';
 import { getQuestions, getQuestionsSuccess, getQuestionsError } from './actions';
+import { makeSelectQuestions } from './selector';
 import axios from 'axios';
 
 
@@ -13,11 +14,15 @@ const getQuestionsAPIUrl = (tech: string) => `https://ztrvektg3c.execute-api.us-
 
 export function* getQuestionsEvent({ payload }: any): any {
 
-  // TODO: update the API to accept params and lambda to use it to filters questions by tech
   const { tech } = payload;
 
+  let questions;
+  questions = yield select(makeSelectQuestions(tech));
+
   try {
-    const questions = yield call(getQuestionsAxios, getQuestionsAPIUrl(tech));
+    if(!questions){
+      questions = yield call(getQuestionsAxios, getQuestionsAPIUrl(tech));
+    }
     yield put(getQuestionsSuccess({questions, tech}));
   } catch (error) {
     yield put(getQuestionsError('Login User Error'));
