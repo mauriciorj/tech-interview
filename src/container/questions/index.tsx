@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Box, Divider, Grid, makeStyles, Typography } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import Header from '../../components/header';
@@ -9,6 +10,7 @@ import BreadCrumbs from '../../components/breadCrumbs';
 import QuestionsFilter from '../../components/questionsFilter';
 import { translations } from '../../translations';
 import { questionsDb } from '../../db/questionsDb';
+import { getQuestions } from './actions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -109,6 +111,7 @@ export interface QuestionsLevels {
 
 const Questions: React.FC<Props> = ({ data }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   let params = useParams();
 
@@ -184,6 +187,10 @@ const Questions: React.FC<Props> = ({ data }) => {
 
   useEffect(() => {
     if (id) {
+      dispatch(getQuestions({tech: id}));
+
+      //TODO: change all logic to use the getQuestions function instead of using the local file questionsDB
+
       const questions = getQuestionsFromDb(id);
       sortQuestions(questions as unknown as Props);
     }
