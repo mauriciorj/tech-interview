@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Divider, Grid, makeStyles, Typography } from '@material-ui/core';
@@ -169,7 +170,7 @@ const Questions: React.FC<Props> = ({ data }) => {
   };
 
   const sortQuestions = (data: Props | QuestionType[]) => {
-    const dataCopy = [...data as any];
+    const dataCopy = [...(data as any)];
     const orderQuestions = dataCopy.sort((a: QuestionType, b: QuestionType) =>
       a.order > b.order ? 1 : b.order > a.order ? -1 : 0
     );
@@ -240,11 +241,11 @@ const Questions: React.FC<Props> = ({ data }) => {
   return (
     <div className={classes.root}>
       <Grid container item xs={12}>
-        {/* <Head> //TODO: install the helmet
-                    <title>{title} Questions</title>
-                    <meta name="description" content={getDescription?.description} />
-                    <meta property="og:url" content={`${og_url}questions/${id}`} />
-                </Head> */}
+        <Helmet>
+          <title>{title} Questions</title>
+          <meta name='description' content={getDescription?.description} />
+          <meta property='og:url' content={`${og_url}questions/${id}`} />
+        </Helmet>
         <Grid item xs={12} className={classes.header}>
           <Grid item xs={1}></Grid>
           <Grid item xs={10}>
