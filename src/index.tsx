@@ -7,16 +7,19 @@ import RoutesManager from './routes';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/configureStore';
+import { HelmetProvider } from 'react-helmet-async';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <BrowserRouter>
-          <RoutesManager />
-        </BrowserRouter>
-      </Provider>
-    </ThemeProvider>
+    <HelmetProvider>
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <BrowserRouter>
+            <RoutesManager />
+          </BrowserRouter>
+        </Provider>
+      </ThemeProvider>
+    </HelmetProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

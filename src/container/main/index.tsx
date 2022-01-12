@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../../components/header';
@@ -8,6 +9,7 @@ import StartHere from '../../components/startHere';
 import StayTuned from '../../components/stayTuned';
 import OurNumbers from '../../components/ourNumbers';
 import Footer from '../../components/footer';
+import { translations } from '../../translations';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 
@@ -58,8 +60,16 @@ const Home: React.FC = () => {
     Aos.init({ duration: 2000, once: true });
   }, []);
 
+  const {
+    en: { description }
+  } = translations;
+
   return (
-    <div >
+    <div>
+      <Helmet>
+        <title>Welcome to tech-interview</title>
+        <meta name='description' content={description} />
+      </Helmet>
       <Grid container item xs={12}>
         <Grid item xs={12} className={classes.header}>
           <Grid item xs={1}></Grid>
