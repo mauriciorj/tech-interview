@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Divider, Grid, makeStyles, Typography } from '@material-ui/core';
+import CircularProgress from '@mui/material/CircularProgress';
 import Pagination from '@material-ui/lab/Pagination';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
@@ -12,7 +13,7 @@ import QuestionsFilter from '../../components/questionsFilter';
 import { translations } from '../../translations';
 import { questionsDb } from '../../db/questionsDb';
 import { getQuestions } from './actions';
-import { makeSelectQuestions } from './selector';
+import { makeSelectQuestions, makeSelectSetIsLoading } from './selector';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,6 +76,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  isLoading: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '20px',
+    marginBottom: '20px'
+  }
 }));
 
 export interface Props {
@@ -137,6 +144,7 @@ const Questions: React.FC<Props> = ({ data }) => {
   const { id } = params;
 
   const questions = useSelector(makeSelectQuestions(id));
+  const isLoading = useSelector(makeSelectSetIsLoading());
 
   let title = id;
   if (id) {
@@ -288,6 +296,11 @@ const Questions: React.FC<Props> = ({ data }) => {
                 )}
               </Grid>
             </Grid>
+            {isLoading && (
+              <Grid item xs={12} className={classes.isLoading}>
+                <CircularProgress size={50} />
+              </Grid>
+            )}
             <Grid item xs={12} md={12} className={classes.cardSession}>
               {currentQuestions?.map(
                 (item: {

@@ -1,5 +1,5 @@
 import { takeLatest, put, call, select } from '@redux-saga/core/effects';
-import { getQuestions, getQuestionsSuccess, getQuestionsError } from './actions';
+import { getQuestions, getQuestionsSuccess, getQuestionsError, setIsLoading } from './actions';
 import { makeSelectQuestions } from './selector';
 import axios from 'axios';
 
@@ -20,12 +20,15 @@ export function* getQuestionsEvent({ payload }: any): any {
   questions = yield select(makeSelectQuestions(tech));
 
   try {
+    yield put(setIsLoading(true));
     if(!questions){
       questions = yield call(getQuestionsAxios, getQuestionsAPIUrl(tech));
     }
     yield put(getQuestionsSuccess({questions, tech}));
   } catch (error) {
     yield put(getQuestionsError('Login User Error'));
+  } finally {
+    yield put(setIsLoading(false));
   }
 }
 
